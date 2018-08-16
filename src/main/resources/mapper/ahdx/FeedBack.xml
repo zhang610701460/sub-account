@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.kanke.modules.ahdx.dao.FeedBackDao">
+
+
+    <select id="queryDateList" parameterType="string" resultType="string">
+    select  statisticstime from t_feedback where  videotype=#{videoType} group by statisticstime order by statisticstime
+    </select>
+
+
+    <select id="queryDateListBystartAndEndTime" resultType="string">
+     select  statisticstime from t_feedback where statisticstime between  #{startTime} and  #{endTime} and videotype=#{videoType}  group by statisticstime order by statisticstime
+    </select>
+
+    <select id="queryDataListByVideoType" resultType="io.kanke.modules.ahdx.entity.FeedBack">
+       select  * from t_feedback  where videotype = #{videoType} and statisticstime in
+        <foreach item="date" collection="list"  open="(" separator="," close=")">
+            #{date}
+        </foreach>
+
+    </select>
+</mapper>
